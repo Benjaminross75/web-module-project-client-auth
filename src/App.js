@@ -5,7 +5,7 @@ import Login from './components/Login';
 import FriendsList from './components/FriendsList';
 import AddFriend from './components/AddFriend';
 import Logout from './components/Logout';
-
+import PrivateRoute from './components/PrivateRoute';
 
 
 
@@ -24,9 +24,11 @@ function App() {
     <Routes>
       <Route path='/' element={<Login/>}/>
       <Route path='/login' element={<Login/>}/>
-      <Route path='/friends' element={<FriendsList/>}/>
-      <Route path='/friends/add' element={<AddFriend/>}/>
-      <Route path='/logout' element={<Logout/>}/>
+      <Route element={<PrivateRoute/>}>
+        <Route path='/friends' element={<FriendsList/>}/>
+        <Route path='/friends/add' element={<AddFriend/>}/>
+        <Route path='/logout' element={<Logout/>}/>
+      </Route>
     </Routes>
     </div>
   );
