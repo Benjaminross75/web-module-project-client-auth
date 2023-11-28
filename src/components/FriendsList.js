@@ -1,13 +1,28 @@
 import React,{useState, useEffect} from "react";
 import axios from 'axios';
 const FriendsList = () =>{
-    const [friend, setFriend] = useState([])
+    const [friends, setFriend] = useState([])
+
+    useEffect(()=>{
+        const token = localStorage.getItem("token")
+        axios.get("http://localhost:9000/api/friends", {
+            headers:{
+                authorization: token
+            }
+        })
+        .then(res =>{
+            setFriend(res.data)
+        })
+        .catch(err => console.error(err))
+    },[])
     return(<div>
          <h2>Friends List</h2>
          <ul>
-            <li>name - age - email</li>
-            <li>name - age - email</li>
-            <li>name - age - email</li>
+          {
+            friends.map(friend =>{
+                return <li key={friend.id}>{friend.name} - {friend.age} - {friend.email}</li>
+            })
+          }
          </ul>
     </div>)
     }
